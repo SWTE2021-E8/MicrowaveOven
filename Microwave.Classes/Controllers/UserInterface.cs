@@ -18,12 +18,13 @@ namespace Microwave.Classes.Controllers
         private IDisplay myDisplay;
 
         private int powerLevel = 50;
-        private int time = 1;
+        private int time = 60;
 
         public UserInterface(
             IButton powerButton,
             IButton timeButton,
             IButton startCancelButton,
+            IButton expandTimeButton,
             IDoor door,
             IDisplay display,
             ILight light,
@@ -34,6 +35,7 @@ namespace Microwave.Classes.Controllers
             timeButton.Pressed += new EventHandler(OnTimePressed);
             startCancelButton.Pressed += new EventHandler(OnStartCancelPressed);
             powerDial.Dialed += new EventHandler(OnPowerChanged);
+            expandTimeButton.Pressed += new EventHandler(OnExpandTimeButtonPressed);
 
             door.Closed += new EventHandler(OnDoorClosed);
             door.Opened += new EventHandler(OnDoorOpened);
@@ -43,10 +45,21 @@ namespace Microwave.Classes.Controllers
             myDisplay = display;
         }
 
+        private void OnExpandTimeButtonPressed(object sender, EventArgs e)
+        {
+            switch (myState)
+            {
+                case States.SETTIME:
+                    time += 5;
+                    Console.WriteLine("time is expanded with 5 seconds");
+                    break;
+            }
+        }
+
         private void ResetValues()
         {
             powerLevel = 50;
-            time = 1;
+            time = 60;
         }
 
         public void OnPowerPressed(object sender, EventArgs e)
@@ -78,12 +91,12 @@ namespace Microwave.Classes.Controllers
             switch (myState)
             {
                 case States.SETPOWER:
-                    myDisplay.ShowTime(time, 0);
+                    myDisplay.ShowTime(time/60, 0);
                     myState = States.SETTIME;
                     break;
                 case States.SETTIME:
-                    time += 1;
-                    myDisplay.ShowTime(time, 0);
+                    time += 60;
+                    myDisplay.ShowTime(time/60, 0);
                     break;
             }
         }
@@ -99,7 +112,7 @@ namespace Microwave.Classes.Controllers
                     break;
                 case States.SETTIME:
                     myLight.TurnOn();
-                    myCooker.StartCooking(powerLevel, time * 60);
+                    myCooker.StartCooking(powerLevel, time);
                     myState = States.COOKING;
                     break;
                 case States.COOKING:

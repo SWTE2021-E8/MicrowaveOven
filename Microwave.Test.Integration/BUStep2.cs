@@ -26,6 +26,7 @@ namespace Microwave.Test.Integration
         private IButton powerButton;
         private IButton timeButton;
         private IButton startCancelButton;
+        private IButton expandTimeButton;
 
         private IDoor door;
 
@@ -37,6 +38,7 @@ namespace Microwave.Test.Integration
             powerButton = Substitute.For<IButton>();
             timeButton = Substitute.For<IButton>();
             startCancelButton = Substitute.For<IButton>();
+            expandTimeButton = Substitute.For<IButton>();
 
             door = Substitute.For<IDoor>();
 
@@ -51,7 +53,7 @@ namespace Microwave.Test.Integration
 
 
             ui = new UserInterface(
-                powerButton, timeButton, startCancelButton,
+                powerButton, timeButton, startCancelButton, expandTimeButton,
                 door, 
                 display, light, powerDial, cooker);
 
