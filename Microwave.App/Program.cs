@@ -26,6 +26,8 @@ namespace Microwave.App
             PowerTube powerTube = new PowerTube(output, powerDial);
 
             Light light = new Light(output);
+            Buzzer buzzer = new Buzzer(output);
+
 
             Microwave.Classes.Boundary.Timer timer = new Classes.Boundary.Timer();
 
@@ -41,7 +43,8 @@ namespace Microwave.App
             display, 
             light,
             powerDial, 
-            cooker);
+            cooker,
+            buzzer);
 
             // Finish the double association
             cooker.UI = ui;
