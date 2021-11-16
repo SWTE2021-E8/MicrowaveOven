@@ -14,6 +14,7 @@ namespace Microwave.Test.Unit
         private IButton powerButton;
         private IButton timeButton;
         private IButton startCancelButton;
+        private IPowerDial powerDial;
 
         private IDoor door;
 
@@ -32,12 +33,14 @@ namespace Microwave.Test.Unit
             light = Substitute.For<ILight>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
+            powerDial = Substitute.For<IPowerDial>();
 
             uut = new UserInterface(
                 powerButton, timeButton, startCancelButton,
                 door,
                 display,
                 light,
+                powerDial,
                 cooker);
         }
 
@@ -69,6 +72,7 @@ namespace Microwave.Test.Unit
             door.Closed += Raise.EventWith(this, EventArgs.Empty);
 
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 50 });
             display.Received(1).ShowPower(Arg.Is<int>(50));
         }
 
@@ -81,15 +85,15 @@ namespace Microwave.Test.Unit
         }
 
         [Test]
-        public void Ready_14PowerButton_PowerIs700()
+        public void Ready_PowerButton_PowerIs700()
         {
-            for (int i = 1; i <= 14; i++)
-            {
-                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-            }
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 700 });
             display.Received(1).ShowPower(Arg.Is<int>(700));
         }
 
+        // This test no longer makes sense
+        /*
         [Test]
         public void Ready_15PowerButton_PowerIs50Again()
         {
@@ -101,6 +105,7 @@ namespace Microwave.Test.Unit
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             display.Received(2).ShowPower(50);
         }
+        */
 
         [Test]
         public void SetPower_CancelButton_DisplayCleared()

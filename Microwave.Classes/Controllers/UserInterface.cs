@@ -27,11 +27,13 @@ namespace Microwave.Classes.Controllers
             IDoor door,
             IDisplay display,
             ILight light,
+            IPowerDial powerDial,
             ICookController cooker)
         {
             powerButton.Pressed += new EventHandler(OnPowerPressed);
             timeButton.Pressed += new EventHandler(OnTimePressed);
             startCancelButton.Pressed += new EventHandler(OnStartCancelPressed);
+            powerDial.Dialed += new EventHandler(OnPowerChanged);
 
             door.Closed += new EventHandler(OnDoorClosed);
             door.Opened += new EventHandler(OnDoorOpened);
@@ -52,14 +54,22 @@ namespace Microwave.Classes.Controllers
             switch (myState)
             {
                 case States.READY:
-                    myDisplay.ShowPower(powerLevel);
                     myState = States.SETPOWER;
                     break;
+            }
+        }
+
+        public void OnPowerChanged(object sender, EventArgs e)
+        {
+            PowerChangedEventArgs powerArgs = (PowerChangedEventArgs)e;
+            switch (myState)
+            {
                 case States.SETPOWER:
-                    powerLevel = (powerLevel >= 700 ? 50 : powerLevel+50);
+                    powerLevel = powerArgs.PowerLevel;
                     myDisplay.ShowPower(powerLevel);
                     break;
             }
+
         }
 
         public void OnTimePressed(object sender, EventArgs e)
@@ -88,7 +98,7 @@ namespace Microwave.Classes.Controllers
                     break;
                 case States.SETTIME:
                     myLight.TurnOn();
-                    myCooker.StartCooking(powerLevel, time*60);
+                    myCooker.StartCooking(powerLevel, time * 60);
                     myState = States.COOKING;
                     break;
                 case States.COOKING:

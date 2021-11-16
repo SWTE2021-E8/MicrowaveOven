@@ -20,13 +20,24 @@ namespace Microwave.App
 
             PowerTube powerTube = new PowerTube(output);
 
+            PowerDial powerDial = new PowerDial();
+
             Light light = new Light(output);
 
             Microwave.Classes.Boundary.Timer timer = new Timer();
 
             CookController cooker = new CookController(timer, display, powerTube);
 
-            UserInterface ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+            UserInterface ui = new UserInterface(
+                    powerButton,
+                    timeButton,
+                    startCancelButton,
+                    door,
+                    display,
+                    light,
+                    powerDial,
+                    cooker);
+
 
             // Finish the double association
             cooker.UI = ui;
@@ -34,6 +45,8 @@ namespace Microwave.App
             // Simulate a simple sequence
 
             powerButton.Press();
+
+            powerDial.Dial(500);
 
             timeButton.Press();
 
