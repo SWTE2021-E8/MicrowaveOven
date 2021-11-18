@@ -81,6 +81,7 @@ namespace Microwave.Test.Unit
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 100 });
             display.Received(1).ShowPower(Arg.Is<int>(100));
         }
 
@@ -203,7 +204,7 @@ namespace Microwave.Test.Unit
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             // Now in SetPower
-            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 100 });
 
             timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             // Now in SetTime
@@ -215,6 +216,8 @@ namespace Microwave.Test.Unit
             cooker.Received(1).StartCooking(100, 120);
         }
 
+        // This test no longer makes sense 
+        /*
         [Test]
         public void Ready_FullPower_CookerIsCalledCorrectly()
         {
@@ -230,8 +233,8 @@ namespace Microwave.Test.Unit
             startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
             cooker.Received(1).StartCooking(700, 60);
-
         }
+        */
 
 
         [Test]
