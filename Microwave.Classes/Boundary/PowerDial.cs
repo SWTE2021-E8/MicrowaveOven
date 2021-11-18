@@ -11,22 +11,12 @@ namespace Microwave.Classes.Boundary
     {
         public event EventHandler Dialed;
 
-        private int lowerBound;
-        private int upperBound;
+        public int lowerBound { get; private set; } = 1;
+        public int upperBound { get; private set; } = 700;
 
         public PowerDial(int lowerBound = 1, int upperBound = 700)
         {
-            if (lowerBound > 0 && upperBound > lowerBound)
-            {
-                this.lowerBound = lowerBound;
-                this.upperBound = upperBound;
-            }
-            else
-            {
-                this.lowerBound = 1;
-                this.lowerBound = 700;
-            }
-
+            setBounds(lowerBound, upperBound);
         }
 
         public void Dial(int powerLevel)
@@ -34,6 +24,15 @@ namespace Microwave.Classes.Boundary
             checkPowerLevel(powerLevel);
             PowerChangedEventArgs args = new PowerChangedEventArgs { PowerLevel = powerLevel };
             Dialed?.Invoke(this, args);
+        }
+
+        private void setBounds(int lowerBound, int upperBound)
+        {
+            if (lowerBound > 0 && upperBound > lowerBound)
+            {
+                this.lowerBound = lowerBound;
+                this.upperBound = upperBound;
+            }
         }
 
         private void checkPowerLevel(int powerLevel)
