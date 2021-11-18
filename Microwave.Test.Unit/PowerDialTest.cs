@@ -25,8 +25,8 @@ namespace Microwave.Test.Unit
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(uut.lowerBound, 1);
-                Assert.AreEqual(uut.upperBound, 700);
+                Assert.AreEqual(1, uut.lowerBound);
+                Assert.AreEqual(700, uut.upperBound);
             });
         }
 
@@ -39,8 +39,8 @@ namespace Microwave.Test.Unit
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(uut.lowerBound, 1);
-                Assert.AreEqual(uut.upperBound, 1300);
+                Assert.AreEqual(1, uut.lowerBound);
+                Assert.AreEqual(1300, uut.upperBound);
             });
         }
 
@@ -53,8 +53,8 @@ namespace Microwave.Test.Unit
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(uut.lowerBound, 1);
-                Assert.AreEqual(uut.upperBound, 700);
+                Assert.AreEqual(1, uut.lowerBound);
+                Assert.AreEqual(700, uut.upperBound);
             });
         }
 
@@ -67,9 +67,35 @@ namespace Microwave.Test.Unit
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(uut.lowerBound, 1);
-                Assert.AreEqual(uut.upperBound, 700);
+                Assert.AreEqual(1, uut.lowerBound);
+                Assert.AreEqual(700, uut.upperBound);
             });
+        }
+
+        [TestCase(1)]
+        [TestCase(50)]
+        [TestCase(700)]
+        public void Dial_FiresEventWithValidPower(int powerLevel)
+        {
+            // Arrange
+            int actualPowerLevel = -1;
+            uut.Dialed += (sender, e) =>
+                actualPowerLevel = ((PowerChangedEventArgs)e).PowerLevel;
+
+            // Act
+            uut.Dial(powerLevel);
+
+            // Assert
+            Assert.AreEqual(powerLevel, actualPowerLevel);
+        }
+
+        [TestCase(-1)]
+        [TestCase(0)]
+        [TestCase(701)]
+        public void Dial_FiresEvent_ThrowsException(int powerLevel)
+        {
+            // Act & Assert
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => uut.Dial(powerLevel));
         }
 
     }
