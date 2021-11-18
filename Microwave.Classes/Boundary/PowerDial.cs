@@ -14,14 +14,18 @@ namespace Microwave.Classes.Boundary
         public int lowerBound { get; private set; } = 1;
         public int upperBound { get; private set; } = 700;
 
-        public PowerDial(int lowerBound = 1, int upperBound = 700)
+        private IOutput myOutput;
+
+        public PowerDial(IOutput output, int lowerBound = 1, int upperBound = 700)
         {
+            myOutput = output;
             setBounds(lowerBound, upperBound);
         }
 
         public void Dial(int powerLevel)
         {
             checkPowerLevel(powerLevel);
+            myOutput.OutputLine($"PowerTube works with {powerLevel}");
             PowerChangedEventArgs args = new PowerChangedEventArgs { PowerLevel = powerLevel };
             Dialed?.Invoke(this, args);
         }

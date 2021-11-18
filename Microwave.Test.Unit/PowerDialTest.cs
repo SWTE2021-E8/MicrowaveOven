@@ -9,18 +9,20 @@ namespace Microwave.Test.Unit
     [TestFixture]
     public class PowerDialTest
     {
-        PowerDial uut;
+        private PowerDial uut;
+        private IOutput output;
 
         [SetUp]
         public void SetUp()
         {
-            uut = new PowerDial();
+            output = Substitute.For<IOutput>();
+            uut = new PowerDial(output);
         }
 
         [Test]
         public void Default_HasCorrectBounds()
         {
-            // Arrange & Act is done in SetUp()
+            // Arrange & Act is already done in SetUp()
 
             // Assert
             Assert.Multiple(() =>
@@ -34,7 +36,7 @@ namespace Microwave.Test.Unit
         public void OverrideBounds_ValidValues()
         {
             // Arrange & Act
-            uut = new PowerDial(1, 1300);
+            uut = new PowerDial(output, 1, 1300);
 
             // Assert
             Assert.Multiple(() =>
@@ -48,7 +50,7 @@ namespace Microwave.Test.Unit
         public void OverrideBounds_NegativeValues_ResetsToDefault()
         {
             // Arrange & Act
-            uut = new PowerDial(-1, 700);
+            uut = new PowerDial(output, -1, 700);
 
             // Assert
             Assert.Multiple(() =>
@@ -62,7 +64,7 @@ namespace Microwave.Test.Unit
         public void OverrideBounds_UpperLessThanLower_ResetsToDefault()
         {
             // Arrange & Act
-            uut = new PowerDial(300, 200);
+            uut = new PowerDial(output, 300, 200);
 
             // Assert
             Assert.Multiple(() =>
@@ -72,6 +74,7 @@ namespace Microwave.Test.Unit
             });
         }
 
+        // BVA: Range of valid input is [1:700] for default
         [TestCase(1)]
         [TestCase(50)]
         [TestCase(700)]
@@ -89,11 +92,13 @@ namespace Microwave.Test.Unit
             Assert.AreEqual(powerLevel, actualPowerLevel);
         }
 
+        // BVA: Every value <1 or >700 is invalid and throws exception for default
         [TestCase(-1)]
         [TestCase(0)]
         [TestCase(701)]
         public void Dial_FiresEvent_ThrowsException(int powerLevel)
         {
+            // Arrange is already done in SetUp()
             // Act & Assert
             Assert.Throws<System.ArgumentOutOfRangeException>(() => uut.Dial(powerLevel));
         }

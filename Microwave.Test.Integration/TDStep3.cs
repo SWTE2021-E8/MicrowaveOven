@@ -26,6 +26,7 @@ namespace Microwave.Test.Integration
 
         private PowerTube powerTube;
         private Timer timer;
+        private PowerDial powerDial;
 
         private IOutput output;
 
@@ -41,13 +42,14 @@ namespace Microwave.Test.Integration
 
             light = new Light(output);
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerDial = new PowerDial(output);
+            powerTube = new PowerTube(output, powerDial);
             timer = new Timer();
 
 
             cooker = new CookController(timer, display, powerTube);
 
-            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, powerDial, cooker);
             cooker.UI = ui;
         }
 
@@ -68,8 +70,7 @@ namespace Microwave.Test.Integration
         public void CookController_PowerTube_TurnOn_150W()
         {
             powerButton.Press();
-            powerButton.Press();
-            powerButton.Press();
+            powerDial.Dial(150);
             timeButton.Press();
             startCancelButton.Press();
 
@@ -80,10 +81,8 @@ namespace Microwave.Test.Integration
         [Test]
         public void CookController_PowerTube_TurnOn_700W()
         {
-            for (int p = 50; p <= 700; p += 50)
-            {
-                powerButton.Press();
-            }
+            powerButton.Press();
+            powerDial.Dial(700);
             timeButton.Press();
             startCancelButton.Press();
 
@@ -151,7 +150,8 @@ namespace Microwave.Test.Integration
 
             light = new Light(output);
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerDial = new PowerDial(output);
+            powerTube = new PowerTube(output, powerDial);
             var faketimer = Substitute.For<ITimer>();
 
             // Make a new cooker, with the 
@@ -159,7 +159,7 @@ namespace Microwave.Test.Integration
             // Then we must make a new UI
             ui = new UserInterface(
                 powerButton, timeButton, startCancelButton,
-                door, display, light, cooker);
+                door, display, light, powerDial, cooker);
             // And make the association
             cooker.UI = ui;
 

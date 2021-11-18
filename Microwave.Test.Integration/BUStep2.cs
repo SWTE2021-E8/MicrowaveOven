@@ -18,6 +18,7 @@ namespace Microwave.Test.Integration
         private Display display;
         private PowerTube powerTube;
         private CookController cooker;
+        private PowerDial powerDial;
 
         private UserInterface ui;
         private Light light;
@@ -41,7 +42,8 @@ namespace Microwave.Test.Integration
 
             timer = new Timer();
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerDial = new PowerDial(output);
+            powerTube = new PowerTube(output, powerDial);
 
             light = new Light(output);
 
@@ -50,8 +52,8 @@ namespace Microwave.Test.Integration
 
             ui = new UserInterface(
                 powerButton, timeButton, startCancelButton,
-                door, 
-                display, light, cooker);
+                door,
+                display, light, powerDial, cooker);
 
             cooker.UI = ui;
 
@@ -84,7 +86,7 @@ namespace Microwave.Test.Integration
         public void UserInterface_Display_ShowPower()
         {
             powerButton.Pressed += Raise.Event();
-            powerButton.Pressed += Raise.Event();
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 50 });
             // Should now be 50 W
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("50 W")));
         }
@@ -128,8 +130,8 @@ namespace Microwave.Test.Integration
         public void UserInterface_CookController_StartCooking_150W()
         {
             powerButton.Pressed += Raise.Event();
-            powerButton.Pressed += Raise.Event();
-            powerButton.Pressed += Raise.Event();
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 150 });
+
             timeButton.Pressed += Raise.Event();
             startCancelButton.Pressed += Raise.Event();
 
@@ -141,10 +143,8 @@ namespace Microwave.Test.Integration
         [Test]
         public void UserInterface_CookController_StartCooking_700W()
         {
-            for (int p = 50; p <= 700; p += 50)
-            {
-                powerButton.Pressed += Raise.Event();
-            }
+            powerButton.Pressed += Raise.Event();
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 700 });
 
             timeButton.Pressed += Raise.Event();
             startCancelButton.Pressed += Raise.Event();

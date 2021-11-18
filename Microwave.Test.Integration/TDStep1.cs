@@ -20,6 +20,8 @@ namespace Microwave.Test.Integration
         private ILight light;
         private IDisplay display;
         private ICookController cooker;
+        private IPowerDial powerDial;
+        private IOutput output;
 
         [SetUp]
         public void Setup()
@@ -32,8 +34,10 @@ namespace Microwave.Test.Integration
             light = Substitute.For<ILight>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
+            output = Substitute.For<IOutput>();
+            powerDial = new PowerDial(output);
 
-            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, powerDial, cooker);
         }
 
         [Test]
@@ -55,6 +59,7 @@ namespace Microwave.Test.Integration
         public void PowerButton_UI_PowerPressed()
         {
             powerButton.Press();
+            powerDial.Dial(50);
 
             display.Received(1).ShowPower(50);
         }

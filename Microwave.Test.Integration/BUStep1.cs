@@ -16,6 +16,7 @@ namespace Microwave.Test.Integration
         private Display display;
         private PowerTube powerTube;
         private CookController cooker;
+        private PowerDial powerDial;
 
         private IUserInterface ui;
 
@@ -26,7 +27,8 @@ namespace Microwave.Test.Integration
 
             timer = new Timer();
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerDial = new PowerDial(output);
+            powerTube = new PowerTube(output, powerDial);
 
             ui = Substitute.For<IUserInterface>();
 

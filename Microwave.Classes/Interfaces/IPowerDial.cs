@@ -10,6 +10,9 @@ namespace Microwave.Classes.Interfaces
     {
         event EventHandler Dialed;
 
+        public int lowerBound { get; }
+        public int upperBound { get; }
+
         void Dial(int powerLevel);
     }
 
