@@ -82,6 +82,8 @@ namespace Microwave.Test.Integration
 
         #region UserInterface_Display
 
+        // This test no longer makes sense
+        /*
         [Test]
         public void UserInterface_Display_ShowPower()
         {
@@ -90,6 +92,7 @@ namespace Microwave.Test.Integration
             // Should now be 50 W
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("50 W")));
         }
+        */
 
         [Test]
         public void UserInterface_Display_ShowTime()
@@ -126,6 +129,8 @@ namespace Microwave.Test.Integration
 
         }
 
+        // This test no longer makes sense
+        /*
         [Test]
         public void UserInterface_CookController_StartCooking_150W()
         {
@@ -139,7 +144,10 @@ namespace Microwave.Test.Integration
             output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube works with 150")));
 
         }
+        */
 
+        // This test no longer makes sense
+        /*
         [Test]
         public void UserInterface_CookController_StartCooking_700W()
         {
@@ -152,6 +160,7 @@ namespace Microwave.Test.Integration
             // Should start cooking 
             output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube works with 700")));
         }
+        */
 
         [Test]
         public void UserInterface_CookController_StartCooking_1min()
