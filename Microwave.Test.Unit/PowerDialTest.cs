@@ -10,13 +10,11 @@ namespace Microwave.Test.Unit
     public class PowerDialTest
     {
         private PowerDial uut;
-        private IOutput output;
 
         [SetUp]
         public void SetUp()
         {
-            output = Substitute.For<IOutput>();
-            uut = new PowerDial(output);
+            uut = new PowerDial();
         }
 
         [Test]
@@ -36,7 +34,7 @@ namespace Microwave.Test.Unit
         public void OverrideBounds_ValidValues()
         {
             // Arrange & Act
-            uut = new PowerDial(output, 1, 1300);
+            uut = new PowerDial(1, 1300);
 
             // Assert
             Assert.Multiple(() =>
@@ -50,7 +48,7 @@ namespace Microwave.Test.Unit
         public void OverrideBounds_NegativeValues_ResetsToDefault()
         {
             // Arrange & Act
-            uut = new PowerDial(output, -1, 700);
+            uut = new PowerDial(-1, 700);
 
             // Assert
             Assert.Multiple(() =>
@@ -64,7 +62,7 @@ namespace Microwave.Test.Unit
         public void OverrideBounds_UpperLessThanLower_ResetsToDefault()
         {
             // Arrange & Act
-            uut = new PowerDial(output, 300, 200);
+            uut = new PowerDial(300, 200);
 
             // Assert
             Assert.Multiple(() =>

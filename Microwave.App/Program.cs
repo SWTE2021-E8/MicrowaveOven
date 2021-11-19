@@ -18,7 +18,7 @@ namespace Microwave.App
 
             Display display = new Display(output);
 
-            PowerDial powerDial = new PowerDial(output);
+            PowerDial powerDial = new PowerDial();
 
             PowerTube powerTube = new PowerTube(output, powerDial);
 

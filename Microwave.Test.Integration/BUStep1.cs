@@ -27,7 +27,7 @@ namespace Microwave.Test.Integration
 
             timer = new Timer();
             display = new Display(output);
-            powerDial = new PowerDial(output);
+            powerDial = new PowerDial();
             powerTube = new PowerTube(output, powerDial);
 
             ui = Substitute.For<IUserInterface>();

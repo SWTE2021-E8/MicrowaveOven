@@ -37,7 +37,7 @@ namespace Microwave.Test.Integration
 
             timer = Substitute.For<ITimer>();
             output = Substitute.For<IOutput>();
-            powerDial = new PowerDial(output);
+            powerDial = new PowerDial();
             powerTube = Substitute.For<IPowerTube>();
 
             light = new Light(output);

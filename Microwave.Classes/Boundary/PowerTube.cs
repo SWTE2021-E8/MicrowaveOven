@@ -29,6 +29,7 @@ namespace Microwave.Classes.Boundary
             }
 
             myPowerDial.Dial(power);
+            myOutput.OutputLine($"PowerTube works with {power}");
             IsOn = true;
         }
 

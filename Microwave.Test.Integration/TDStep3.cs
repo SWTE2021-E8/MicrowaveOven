@@ -42,7 +42,7 @@ namespace Microwave.Test.Integration
 
             light = new Light(output);
             display = new Display(output);
-            powerDial = new PowerDial(output);
+            powerDial = new PowerDial();
             powerTube = new PowerTube(output, powerDial);
             timer = new Timer();
 
@@ -150,7 +150,7 @@ namespace Microwave.Test.Integration
 
             light = new Light(output);
             display = new Display(output);
-            powerDial = new PowerDial(output);
+            powerDial = new PowerDial();
             powerTube = new PowerTube(output, powerDial);
             var faketimer = Substitute.For<ITimer>();
 
