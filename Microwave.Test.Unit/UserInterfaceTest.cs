@@ -74,7 +74,6 @@ namespace Microwave.Test.Unit
             door.Closed += Raise.EventWith(this, EventArgs.Empty);
 
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 50 });
             display.Received(1).ShowPower(Arg.Is<int>(50));
         }
 
