@@ -49,7 +49,8 @@ namespace Microwave.Test.Integration
 
             cooker = new CookController(timer, display, powerTube);
 
-            ui = new UserInterface(powerButton, timeButton, startCancelButton, expandTimeButton, door, display, light, powerDial, cooker);
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, expandTimeButton, door, display, light,
+                powerDial, cooker);
             cooker.UI = ui;
         }
 
@@ -71,6 +72,7 @@ namespace Microwave.Test.Integration
 
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("off")));
         }
+
         #endregion
 
         #region UI_Display
@@ -96,9 +98,7 @@ namespace Microwave.Test.Integration
         [Test]
         public void UI_Display_ShowPower_700W()
         {
-            for (int p = 50; p <= 700; p += 50)
-            {
-                powerButton.Press();
+            powerButton.Press();
             powerDial.Dial(700);
 
             output.Received().OutputLine(Arg.Is<string>(str => str.Contains("700 W")));
@@ -142,6 +142,7 @@ namespace Microwave.Test.Integration
 
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("cleared")));
         }
+
         #endregion
 
         #region UI_CookController
@@ -199,33 +200,33 @@ namespace Microwave.Test.Integration
         [Test]
         public void UI_CookController_StartCooking_700W()
         {
-            for (int p = 50; p <= 700; p += 50)
+
+                powerButton.Press();
+                powerDial.Dial(700);
+
+                timeButton.Press();
+                startCancelButton.Press();
+
+                // Cooking has started
+                // Can be verified by powertube
+                powerTube.Received().TurnOn(700);
+            }
+
+            [Test]
+            public void UI_CookController_Stop()
             {
                 powerButton.Press();
-            powerDial.Dial(700);
+                timeButton.Press();
+                startCancelButton.Press();
 
-            timeButton.Press();
-            startCancelButton.Press();
+                // Now we force stopping
+                startCancelButton.Press();
 
-            // Cooking has started
-            // Can be verified by powertube
-            powerTube.Received().TurnOn(700);
+                // Cook controller should have stopped powertube
+                powerTube.Received(1).TurnOff();
+            }
+
+            #endregion
         }
-
-        [Test]
-        public void UI_CookController_Stop()
-        {
-            powerButton.Press();
-            timeButton.Press();
-            startCancelButton.Press();
-
-            // Now we force stopping
-            startCancelButton.Press();
-
-            // Cook controller should have stopped powertube
-            powerTube.Received(1).TurnOff();
-        }
-
-        #endregion
     }
-}
+

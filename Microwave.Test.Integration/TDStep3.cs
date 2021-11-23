@@ -83,9 +83,7 @@ namespace Microwave.Test.Integration
         [Test]
         public void CookController_PowerTube_TurnOn_700W()
         {
-            for (int p = 50; p <= 700; p += 50)
-            {
-                powerButton.Press();
+            powerButton.Press();
             powerDial.Dial(700);
             timeButton.Press();
             startCancelButton.Press();

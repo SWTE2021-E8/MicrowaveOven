@@ -90,9 +90,7 @@ namespace Microwave.Test.Unit
         [Test]
         public void Ready_PowerButton_PowerIs700()
         {
-            for (int i = 1; i <= 14; i++)
-            {
-                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 700 });
             display.Received(1).ShowPower(Arg.Is<int>(700));
         }
