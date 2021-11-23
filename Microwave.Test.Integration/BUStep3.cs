@@ -67,7 +67,6 @@ namespace Microwave.Test.Integration
         public void Button_UserInterface_PowerButtonPressed()
         {
             powerButton.Press();
-            powerDial.Dial(50);
 
             // Should now be 50 W
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("50 W")));

@@ -59,7 +59,6 @@ namespace Microwave.Test.Integration
         public void PowerButton_UI_PowerPressed()
         {
             powerButton.Press();
-            powerDial.Dial(50);
 
             display.Received(1).ShowPower(50);
         }
