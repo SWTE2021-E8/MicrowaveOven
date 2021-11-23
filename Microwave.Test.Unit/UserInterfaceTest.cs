@@ -21,6 +21,7 @@ namespace Microwave.Test.Unit
 
         private IDisplay display;
         private ILight light;
+        private IBuzzer buzzer;
 
         private ICookController cooker;
 
@@ -33,6 +34,7 @@ namespace Microwave.Test.Unit
             expandTimeButton = Substitute.For<IButton>();
             door = Substitute.For<IDoor>();
             light = Substitute.For<ILight>();
+            buzzer = Substitute.For<IBuzzer>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
             powerDial = Substitute.For<IPowerDial>();
@@ -43,7 +45,8 @@ namespace Microwave.Test.Unit
                 display,
                 light,
                 powerDial,
-                cooker);
+                cooker,
+                buzzer);
         }
 
         [Test]

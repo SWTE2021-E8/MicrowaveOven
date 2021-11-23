@@ -19,6 +19,7 @@ namespace Microwave.Test.Integration
         private UserInterface ui;
 
         private ILight light;
+        private IBuzzer buzzer;
         private IDisplay display;
         private ICookController cooker;
         private IPowerDial powerDial;
@@ -33,11 +34,12 @@ namespace Microwave.Test.Integration
             expandTimeButton = new Button();
 
             light = Substitute.For<ILight>();
+            buzzer = Substitute.For<IBuzzer>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
             powerDial = new PowerDial();
 
-            ui = new UserInterface(powerButton, timeButton, startCancelButton, expandTimeButton, door, display, light, powerDial, cooker);
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, expandTimeButton, door, display, light, powerDial, cooker,buzzer);
         }
 
         [Test]
