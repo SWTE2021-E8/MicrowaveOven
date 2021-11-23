@@ -52,7 +52,7 @@ namespace Microwave.Test.Integration
 
             ui = new UserInterface(
                 powerButton, timeButton, startCancelButton,
-                door,
+                door, 
                 display, light, powerDial, cooker);
 
             cooker.UI = ui;
@@ -151,7 +151,9 @@ namespace Microwave.Test.Integration
         [Test]
         public void UserInterface_CookController_StartCooking_700W()
         {
-            powerButton.Pressed += Raise.Event();
+            for (int p = 50; p <= 700; p += 50)
+            {
+                powerButton.Pressed += Raise.Event();
             powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 700 });
 
             timeButton.Pressed += Raise.Event();

@@ -54,6 +54,7 @@ namespace Microwave.Classes.Controllers
             switch (myState)
             {
                 case States.READY:
+                    myDisplay.ShowPower(powerLevel);
                     myState = States.SETPOWER;
                     break;
             }

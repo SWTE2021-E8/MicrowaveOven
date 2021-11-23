@@ -35,6 +35,7 @@ namespace Microwave.Test.Integration
             timeButton = new Button();
             startCancelButton = new Button();
 
+            powerTube = Substitute.For<IPowerTube>();
             timer = Substitute.For<ITimer>();
             output = Substitute.For<IOutput>();
             powerDial = new PowerDial();
@@ -92,7 +93,9 @@ namespace Microwave.Test.Integration
         [Test]
         public void UI_Display_ShowPower_700W()
         {
-            powerButton.Press();
+            for (int p = 50; p <= 700; p += 50)
+            {
+                powerButton.Press();
             powerDial.Dial(700);
 
             output.Received().OutputLine(Arg.Is<string>(str => str.Contains("700 W")));
@@ -193,7 +196,9 @@ namespace Microwave.Test.Integration
         [Test]
         public void UI_CookController_StartCooking_700W()
         {
-            powerButton.Press();
+            for (int p = 50; p <= 700; p += 50)
+            {
+                powerButton.Press();
             powerDial.Dial(700);
 
             timeButton.Press();
