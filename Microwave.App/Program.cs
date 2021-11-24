@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Microwave.Classes.Boundary;
 using Microwave.Classes.Controllers;
 
@@ -11,6 +13,7 @@ namespace Microwave.App
             Button startCancelButton = new Button();
             Button powerButton = new Button();
             Button timeButton = new Button();
+            Button expandTimeButton = new Button();
 
             Door door = new Door();
 
@@ -18,15 +21,30 @@ namespace Microwave.App
 
             Display display = new Display(output);
 
-            PowerTube powerTube = new PowerTube(output);
+            PowerDial powerDial = new PowerDial();
+
+            PowerTube powerTube = new PowerTube(output, powerDial);
 
             Light light = new Light(output);
+            Buzzer buzzer = new Buzzer(output);
 
-            Microwave.Classes.Boundary.Timer timer = new Timer();
+
+            Microwave.Classes.Boundary.Timer timer = new Classes.Boundary.Timer();
 
             CookController cooker = new CookController(timer, display, powerTube);
 
-            UserInterface ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+        
+
+            UserInterface ui = new UserInterface(powerButton, 
+            timeButton, 
+            startCancelButton, 
+            expandTimeButton, 
+            door, 
+            display, 
+            light,
+            powerDial, 
+            cooker,
+            buzzer);
 
             // Finish the double association
             cooker.UI = ui;
@@ -35,13 +53,22 @@ namespace Microwave.App
 
             powerButton.Press();
 
+            powerDial.Dial(500);
+
             timeButton.Press();
+
+            /// expand time with 5 secs each time
+            for (int i = 0; i < 10; i++)
+            {
+                expandTimeButton.Press();
+            }
 
             startCancelButton.Press();
 
-            // The simple sequence should now run
 
-            System.Console.WriteLine("When you press enter, the program will stop");
+                // The simple sequence should now run
+
+                System.Console.WriteLine("When you press enter, the program will stop");
             // Wait for input
 
             System.Console.ReadLine();

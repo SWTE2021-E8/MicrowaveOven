@@ -14,11 +14,14 @@ namespace Microwave.Test.Unit
         private IButton powerButton;
         private IButton timeButton;
         private IButton startCancelButton;
+        private IPowerDial powerDial;
+        private IButton expandTimeButton;
 
         private IDoor door;
 
         private IDisplay display;
         private ILight light;
+        private IBuzzer buzzer;
 
         private ICookController cooker;
 
@@ -28,17 +31,22 @@ namespace Microwave.Test.Unit
             powerButton = Substitute.For<IButton>();
             timeButton = Substitute.For<IButton>();
             startCancelButton = Substitute.For<IButton>();
+            expandTimeButton = Substitute.For<IButton>();
             door = Substitute.For<IDoor>();
             light = Substitute.For<ILight>();
+            buzzer = Substitute.For<IBuzzer>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
+            powerDial = Substitute.For<IPowerDial>();
 
             uut = new UserInterface(
-                powerButton, timeButton, startCancelButton,
+                powerButton, timeButton, startCancelButton, expandTimeButton,
                 door,
                 display,
                 light,
-                cooker);
+                powerDial,
+                cooker,
+                buzzer);
         }
 
         [Test]
@@ -77,19 +85,20 @@ namespace Microwave.Test.Unit
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 100 });
             display.Received(1).ShowPower(Arg.Is<int>(100));
         }
 
         [Test]
-        public void Ready_14PowerButton_PowerIs700()
+        public void Ready_PowerButton_PowerIs700()
         {
-            for (int i = 1; i <= 14; i++)
-            {
-                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-            }
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 700 });
             display.Received(1).ShowPower(Arg.Is<int>(700));
         }
 
+        // This test no longer makes sense
+        /*
         [Test]
         public void Ready_15PowerButton_PowerIs50Again()
         {
@@ -101,6 +110,7 @@ namespace Microwave.Test.Unit
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             display.Received(2).ShowPower(50);
         }
+        */
 
         [Test]
         public void SetPower_CancelButton_DisplayCleared()
@@ -198,7 +208,7 @@ namespace Microwave.Test.Unit
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             // Now in SetPower
-            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 100 });
 
             timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             // Now in SetTime
@@ -210,6 +220,8 @@ namespace Microwave.Test.Unit
             cooker.Received(1).StartCooking(100, 120);
         }
 
+        // This test no longer makes sense 
+        /*
         [Test]
         public void Ready_FullPower_CookerIsCalledCorrectly()
         {
@@ -227,6 +239,7 @@ namespace Microwave.Test.Unit
             cooker.Received(1).StartCooking(700, 60);
 
         }
+        */
 
 
         [Test]
@@ -333,6 +346,45 @@ namespace Microwave.Test.Unit
             startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
             light.Received(1).TurnOff();
+        }
+
+        [Test]
+        public void startcooking_TimeExpanded_timeIsExpaned5Secs()
+        {
+
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // raise start time from 60 sec to 65 sec
+            expandTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).StartCooking(50, 65);
+
+        }
+
+        [Test]
+        public void startcooking_TimeExpanded_timeIsExpaned50Secs()
+        {
+
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            for(int i= 0; i < 10; i++)
+            {
+                // raise start time from 60 sec to 65 sec
+                expandTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+          
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).StartCooking(50, 110);
+
         }
 
 

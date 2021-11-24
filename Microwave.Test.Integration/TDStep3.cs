@@ -17,15 +17,18 @@ namespace Microwave.Test.Integration
         private Button powerButton;
         private Button timeButton;
         private Button startCancelButton;
+        private Button expandTimeButton;
 
         private UserInterface ui;
 
         private Light light;
+        private Buzzer buzzer;
         private Display display;
         private CookController cooker;
 
         private PowerTube powerTube;
         private Timer timer;
+        private PowerDial powerDial;
 
         private IOutput output;
 
@@ -36,18 +39,21 @@ namespace Microwave.Test.Integration
             powerButton = new Button();
             timeButton = new Button();
             startCancelButton = new Button();
+            expandTimeButton = new Button();
 
             output = Substitute.For<IOutput>();
 
             light = new Light(output);
+            buzzer = new Buzzer(output);
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerDial = new PowerDial();
+            powerTube = new PowerTube(output, powerDial);
             timer = new Timer();
 
 
             cooker = new CookController(timer, display, powerTube);
 
-            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, expandTimeButton, door, display, light,powerDial, cooker,buzzer);
             cooker.UI = ui;
         }
 
@@ -68,8 +74,7 @@ namespace Microwave.Test.Integration
         public void CookController_PowerTube_TurnOn_150W()
         {
             powerButton.Press();
-            powerButton.Press();
-            powerButton.Press();
+            powerDial.Dial(150);
             timeButton.Press();
             startCancelButton.Press();
 
@@ -80,10 +85,8 @@ namespace Microwave.Test.Integration
         [Test]
         public void CookController_PowerTube_TurnOn_700W()
         {
-            for (int p = 50; p <= 700; p += 50)
-            {
-                powerButton.Press();
-            }
+            powerButton.Press();
+            powerDial.Dial(700);
             timeButton.Press();
             startCancelButton.Press();
 
@@ -146,20 +149,22 @@ namespace Microwave.Test.Integration
             powerButton = new Button();
             timeButton = new Button();
             startCancelButton = new Button();
+            expandTimeButton = new Button();
 
             output = Substitute.For<IOutput>();
 
             light = new Light(output);
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerDial = new PowerDial();
+            powerTube = new PowerTube(output, powerDial);
             var faketimer = Substitute.For<ITimer>();
 
             // Make a new cooker, with the 
             cooker = new CookController(faketimer, display, powerTube);
             // Then we must make a new UI
             ui = new UserInterface(
-                powerButton, timeButton, startCancelButton,
-                door, display, light, cooker);
+                powerButton, timeButton, startCancelButton,expandTimeButton,
+                door, display, light, powerDial, cooker,buzzer);
             // And make the association
             cooker.UI = ui;
 
