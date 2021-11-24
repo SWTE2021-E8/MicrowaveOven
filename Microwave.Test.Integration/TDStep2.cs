@@ -51,8 +51,12 @@ namespace Microwave.Test.Integration
 
             cooker = new CookController(timer, display, powerTube);
 
+<<<<<<< HEAD
             ui = new UserInterface(powerButton, timeButton, startCancelButton, expandTimeButton, door, display, light,
                 powerDial, cooker,buzzer);
+=======
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+>>>>>>> parent of f6e14c6 (Done, i think)
             cooker.UI = ui;
         }
 
@@ -103,8 +107,16 @@ namespace Microwave.Test.Integration
                 powerButton.Press();
                 timeButton.Press();
 
+<<<<<<< HEAD
                 output.Received().OutputLine(Arg.Is<string>(str => str.Contains("01:00")));
             }
+=======
+        [Test]
+        public void UI_Display_Showtime_1min()
+        {
+            powerButton.Press();
+            timeButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
 
             [Test]
             public void UI_Display_Showtime_2min()
@@ -113,8 +125,17 @@ namespace Microwave.Test.Integration
                 timeButton.Press();
                 timeButton.Press();
 
+<<<<<<< HEAD
                 output.Received().OutputLine(Arg.Is<string>(str => str.Contains("02:00")));
             }
+=======
+        [Test]
+        public void UI_Display_Showtime_2min()
+        {
+            powerButton.Press();
+            timeButton.Press();
+            timeButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
 
             [Test]
             public void UI_Display_Clear_()
@@ -123,10 +144,19 @@ namespace Microwave.Test.Integration
                 timeButton.Press();
                 startCancelButton.Press();
 
+<<<<<<< HEAD
                 // Simulate cooking is done
                 // This would be fine, as we are investigating the UI - Display interface
                 // not anything else
                 // ui.CookingIsDone();
+=======
+        [Test]
+        public void UI_Display_Clear_()
+        {
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
 
                 // Alternative, use the timer as driver for cooker, which 
                 // will make cooking stop
@@ -140,18 +170,28 @@ namespace Microwave.Test.Integration
 
             #region UI_CookController
 
+<<<<<<< HEAD
             [Test]
             public void UI_CookController_StartCooking_1min()
             {
                 powerButton.Press();
                 timeButton.Press();
                 startCancelButton.Press();
+=======
+        [Test]
+        public void UI_CookController_StartCooking_1min()
+        {
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
 
                 // Cooking has started
                 // Can be verified by timer
                 timer.Received().Start(60);
             }
 
+<<<<<<< HEAD
             [Test]
             public void UI_CookController_StartCooking_2min()
             {
@@ -159,24 +199,43 @@ namespace Microwave.Test.Integration
                 timeButton.Press();
                 timeButton.Press();
                 startCancelButton.Press();
+=======
+        [Test]
+        public void UI_CookController_StartCooking_2min()
+        {
+            powerButton.Press();
+            timeButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
 
                 // Cooking has started
                 // Can be verified by timer
                 timer.Received().Start(120);
             }
 
+<<<<<<< HEAD
             [Test]
             public void UI_CookController_StartCooking_50W()
             {
                 powerButton.Press();
                 timeButton.Press();
                 startCancelButton.Press();
+=======
+        [Test]
+        public void UI_CookController_StartCooking_50W()
+        {
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
 
                 // Cooking has started
                 // Can be verified by powertube
                 powerTube.Received().TurnOn(50);
             }
 
+<<<<<<< HEAD
             [Test]
             public void UI_CookController_StartCooking_100W()
             {
@@ -184,6 +243,15 @@ namespace Microwave.Test.Integration
                 powerDial.Dial(100);
                 timeButton.Press();
                 startCancelButton.Press();
+=======
+        [Test]
+        public void UI_CookController_StartCooking_100W()
+        {
+            powerButton.Press();
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
 
                 // Cooking has started
                 // Can be verified by powertube
@@ -196,20 +264,34 @@ namespace Microwave.Test.Integration
                 powerButton.Press();
                     powerDial.Dial(700);
 
+<<<<<<< HEAD
                     timeButton.Press();
                     startCancelButton.Press();
+=======
+            timeButton.Press();
+            startCancelButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
 
                     // Cooking has started
                     // Can be verified by powertube
                     powerTube.Received().TurnOn(700);
                 }
 
+<<<<<<< HEAD
                 [Test]
                 public void UI_CookController_Stop()
                 {
                     powerButton.Press();
                     timeButton.Press();
                     startCancelButton.Press();
+=======
+        [Test]
+        public void UI_CookController_Stop()
+        {
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
 
                     // Now we force stopping
                     startCancelButton.Press();

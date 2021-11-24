@@ -39,7 +39,11 @@ namespace Microwave.Test.Integration
             cooker = Substitute.For<ICookController>();
             powerDial = new PowerDial();
 
+<<<<<<< HEAD
             ui = new UserInterface(powerButton, timeButton, startCancelButton, expandTimeButton, door, display, light, powerDial, cooker,buzzer);
+=======
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+>>>>>>> parent of f6e14c6 (Done, i think)
         }
 
         [Test]

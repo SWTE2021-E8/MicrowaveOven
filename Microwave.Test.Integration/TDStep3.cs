@@ -53,7 +53,11 @@ namespace Microwave.Test.Integration
 
             cooker = new CookController(timer, display, powerTube);
 
+<<<<<<< HEAD
             ui = new UserInterface(powerButton, timeButton, startCancelButton, expandTimeButton, door, display, light,powerDial, cooker,buzzer);
+=======
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+>>>>>>> parent of f6e14c6 (Done, i think)
             cooker.UI = ui;
         }
 
@@ -74,7 +78,12 @@ namespace Microwave.Test.Integration
         public void CookController_PowerTube_TurnOn_150W()
         {
             powerButton.Press();
+<<<<<<< HEAD
             powerDial.Dial(150);
+=======
+            powerButton.Press();
+            powerButton.Press();
+>>>>>>> parent of f6e14c6 (Done, i think)
             timeButton.Press();
             startCancelButton.Press();
 
@@ -85,8 +94,15 @@ namespace Microwave.Test.Integration
         [Test]
         public void CookController_PowerTube_TurnOn_700W()
         {
+<<<<<<< HEAD
             powerButton.Press();
             powerDial.Dial(700);
+=======
+            for (int p = 50; p <= 700; p += 50)
+            {
+                powerButton.Press();
+            }
+>>>>>>> parent of f6e14c6 (Done, i think)
             timeButton.Press();
             startCancelButton.Press();
 
@@ -163,8 +179,13 @@ namespace Microwave.Test.Integration
             cooker = new CookController(faketimer, display, powerTube);
             // Then we must make a new UI
             ui = new UserInterface(
+<<<<<<< HEAD
                 powerButton, timeButton, startCancelButton,expandTimeButton,
                 door, display, light, powerDial, cooker,buzzer);
+=======
+                powerButton, timeButton, startCancelButton,
+                door, display, light, cooker);
+>>>>>>> parent of f6e14c6 (Done, i think)
             // And make the association
             cooker.UI = ui;
 

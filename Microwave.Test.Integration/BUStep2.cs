@@ -53,7 +53,11 @@ namespace Microwave.Test.Integration
 
 
             ui = new UserInterface(
+<<<<<<< HEAD
                 powerButton, timeButton, startCancelButton, expandTimeButton,
+=======
+                powerButton, timeButton, startCancelButton,
+>>>>>>> parent of f6e14c6 (Done, i think)
                 door, 
                 display, light, powerDial, cooker,buzzer);
 
@@ -137,8 +141,13 @@ namespace Microwave.Test.Integration
         public void UserInterface_CookController_StartCooking_150W()
         {
             powerButton.Pressed += Raise.Event();
+<<<<<<< HEAD
             powerDial.Dialed += Raise.EventWith(this, new PowerChangedEventArgs { PowerLevel = 150 });
 
+=======
+            powerButton.Pressed += Raise.Event();
+            powerButton.Pressed += Raise.Event();
+>>>>>>> parent of f6e14c6 (Done, i think)
             timeButton.Pressed += Raise.Event();
             startCancelButton.Pressed += Raise.Event();
 
