@@ -15,6 +15,7 @@ namespace Microwave.Test.Integration
         private Display display;
         private PowerTube powerTube;
         private CookController cooker;
+        private PowerDial powerDial;
 
         private UserInterface ui;
         private Light light;
@@ -38,16 +39,17 @@ namespace Microwave.Test.Integration
 
             timer = new Timer();
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerDial = new PowerDial();
+            powerTube = new PowerTube(output, powerDial);
 
             light = new Light(output);
 
             cooker = new CookController(timer, display, powerTube);
-            
+
             ui = new UserInterface(
                 powerButton, timeButton, startCancelButton,
                 door,
-                display, light, cooker);
+                display, light, powerDial, cooker);
 
             cooker.UI = ui;
 
@@ -63,6 +65,7 @@ namespace Microwave.Test.Integration
         public void Button_UserInterface_PowerButtonPressed()
         {
             powerButton.Press();
+            powerDial.Dial(50);
 
             // Should now be 50 W
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("50 W")));

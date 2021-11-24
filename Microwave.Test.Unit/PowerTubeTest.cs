@@ -11,12 +11,16 @@ namespace Microwave.Test.Unit
     {
         private PowerTube uut;
         private IOutput output;
+        private IPowerDial powerDial;
 
         [SetUp]
         public void Setup()
         {
+            powerDial = Substitute.For<IPowerDial>();
+            powerDial.lowerBound.Returns(1);
+            powerDial.upperBound.Returns(700);
             output = Substitute.For<IOutput>();
-            uut = new PowerTube(output);
+            uut = new PowerTube(output, powerDial);
         }
 
         [TestCase(1)]
@@ -27,7 +31,7 @@ namespace Microwave.Test.Unit
         public void TurnOn_WasOffCorrectPower_CorrectOutput(int power)
         {
             uut.TurnOn(power);
-            output.Received().OutputLine(Arg.Is<string>(str => str.Contains($"{power}")));
+            powerDial.Received().Dial(power);
         }
 
         [TestCase(-5)]
