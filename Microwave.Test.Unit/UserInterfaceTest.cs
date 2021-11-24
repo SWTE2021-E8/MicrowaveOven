@@ -40,11 +40,7 @@ namespace Microwave.Test.Unit
             powerDial = Substitute.For<IPowerDial>();
 
             uut = new UserInterface(
-<<<<<<< HEAD
                 powerButton, timeButton, startCancelButton, expandTimeButton,
-=======
-                powerButton, timeButton, startCancelButton,
->>>>>>> parent of f6e14c6 (Done, i think)
                 door,
                 display,
                 light,

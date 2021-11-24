@@ -19,11 +19,7 @@ namespace Microwave.Classes.Controllers
         private IBuzzer myBuzzer;
 
         private int powerLevel = 50;
-<<<<<<< HEAD
         private int time = 60;
-=======
-        private int time = 1;
->>>>>>> parent of f6e14c6 (Done, i think)
 
         public UserInterface(
             IButton powerButton,
@@ -40,11 +36,8 @@ namespace Microwave.Classes.Controllers
             powerButton.Pressed += new EventHandler(OnPowerPressed);
             timeButton.Pressed += new EventHandler(OnTimePressed);
             startCancelButton.Pressed += new EventHandler(OnStartCancelPressed);
-<<<<<<< HEAD
             powerDial.Dialed += new EventHandler(OnPowerChanged);
             expandTimeButton.Pressed += new EventHandler(OnExpandTimeButtonPressed);
-=======
->>>>>>> parent of f6e14c6 (Done, i think)
 
             door.Closed += new EventHandler(OnDoorClosed);
             door.Opened += new EventHandler(OnDoorOpened);
@@ -70,11 +63,7 @@ namespace Microwave.Classes.Controllers
         private void ResetValues()
         {
             powerLevel = 50;
-<<<<<<< HEAD
             time = 60;
-=======
-            time = 1;
->>>>>>> parent of f6e14c6 (Done, i think)
         }
 
         public void OnPowerPressed(object sender, EventArgs e)
@@ -94,7 +83,6 @@ namespace Microwave.Classes.Controllers
             switch (myState)
             {
                 case States.SETPOWER:
-<<<<<<< HEAD
                     powerLevel = powerArgs.PowerLevel;
                     myDisplay.ShowPower(powerLevel);
                     break;
@@ -113,14 +101,6 @@ namespace Microwave.Classes.Controllers
                 case States.SETTIME:
                     time += 60;
                     myDisplay.ShowTime(time/60, 0);
-=======
-                    myDisplay.ShowTime(time, 0);
-                    myState = States.SETTIME;
-                    break;
-                case States.SETTIME:
-                    time += 1;
-                    myDisplay.ShowTime(time, 0);
->>>>>>> parent of f6e14c6 (Done, i think)
                     break;
             }
         }
@@ -136,11 +116,7 @@ namespace Microwave.Classes.Controllers
                     break;
                 case States.SETTIME:
                     myLight.TurnOn();
-<<<<<<< HEAD
                     myCooker.StartCooking(powerLevel, time);
-=======
-                    myCooker.StartCooking(powerLevel, time*60);
->>>>>>> parent of f6e14c6 (Done, i think)
                     myState = States.COOKING;
                     break;
                 case States.COOKING:

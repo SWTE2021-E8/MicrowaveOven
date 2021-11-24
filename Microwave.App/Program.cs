@@ -13,10 +13,7 @@ namespace Microwave.App
             Button startCancelButton = new Button();
             Button powerButton = new Button();
             Button timeButton = new Button();
-<<<<<<< HEAD
             Button expandTimeButton = new Button();
-=======
->>>>>>> parent of f6e14c6 (Done, i think)
 
             Door door = new Door();
 
@@ -36,7 +33,6 @@ namespace Microwave.App
 
             CookController cooker = new CookController(timer, display, powerTube);
 
-<<<<<<< HEAD
         
 
             UserInterface ui = new UserInterface(powerButton, 
@@ -49,9 +45,6 @@ namespace Microwave.App
             powerDial, 
             cooker,
             buzzer);
-=======
-            UserInterface ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
->>>>>>> parent of f6e14c6 (Done, i think)
 
             // Finish the double association
             cooker.UI = ui;
@@ -60,7 +53,6 @@ namespace Microwave.App
 
             powerButton.Press();
 
-<<<<<<< HEAD
             powerDial.Dial(500);
 
             timeButton.Press();
@@ -70,9 +62,6 @@ namespace Microwave.App
             {
                 expandTimeButton.Press();
             }
-=======
-            timeButton.Press();
->>>>>>> parent of f6e14c6 (Done, i think)
 
             startCancelButton.Press();
 
