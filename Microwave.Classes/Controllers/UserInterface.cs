@@ -57,7 +57,12 @@ namespace Microwave.Classes.Controllers
                     time += 5;
                     Console.WriteLine("time is expanded with 5 seconds");
                     break;
+                case States.COOKING:
+                    time += 5;
+                    myCooker.UpdateCookingTime(time);
+                    break;
             }
+
         }
 
         private void ResetValues()

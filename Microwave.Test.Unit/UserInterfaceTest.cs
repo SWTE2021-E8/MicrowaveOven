@@ -349,7 +349,7 @@ namespace Microwave.Test.Unit
         }
 
         [Test]
-        public void startcooking_TimeExpanded_timeIsExpaned5Secs()
+        public void SetTime_TimeExpanded_timeIsExpaned5Secs()
         {
 
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
@@ -367,7 +367,7 @@ namespace Microwave.Test.Unit
         }
 
         [Test]
-        public void startcooking_TimeExpanded_timeIsExpaned50Secs()
+        public void SetTime_TimeExpanded_timeIsExpaned50Secs()
         {
 
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
@@ -385,6 +385,20 @@ namespace Microwave.Test.Unit
 
             cooker.Received(1).StartCooking(50, 110);
 
+        }
+
+        [Test]
+        public void cookingstarted_TimeExpanded_TimeIsExpanded5Secs()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            expandTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).UpdateCookingTime(65);
         }
 
 

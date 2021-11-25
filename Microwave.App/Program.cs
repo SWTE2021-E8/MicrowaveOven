@@ -65,7 +65,8 @@ namespace Microwave.App
 
             startCancelButton.Press();
 
-
+            expandTimeButton.Press();
+            expandTimeButton.Press();
                 // The simple sequence should now run
 
                 System.Console.WriteLine("When you press enter, the program will stop");
